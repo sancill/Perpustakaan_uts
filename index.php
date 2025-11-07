@@ -1,5 +1,16 @@
 <?php
+session_start();
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header("Location: login.php");
+    exit();
+}
 define('MY_APP', true);
+ 
+// Cek apakah pengguna sudah login
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header("Location: login.php");
+    exit();
+}
 
 // Get hal
 $page = isset($_GET['hal']) ? $_GET['hal'] : 'dashboard';
