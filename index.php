@@ -4,6 +4,9 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     header("Location: login.php");
     exit();
 }
+
+require_once "includes/config.php";
+
 define('MY_APP', true);
  
 // Cek apakah pengguna sudah login
