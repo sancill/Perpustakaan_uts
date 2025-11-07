@@ -13,17 +13,25 @@ if (!isset($_SESSION)) {
                     Dashboard
                 </a>
                 <div class="sb-sidenav-menu-heading">Manajemen</div>
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
-                    aria-expanded="false" aria-controls="collapseLayouts">
+                <?php
+                // Tandai menu Buku aktif jika halaman terkait buku sedang dibuka
+                $book_pages = array('daftar-buku', 'tambah-buku', 'ubah-buku');
+                $book_active = in_array($page, $book_pages);
+                ?>
+                <a class="nav-link <?php echo $book_active ? 'active' : 'collapsed'; ?>" href="#"
+                    data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
+                    aria-expanded="<?php echo $book_active ? 'true' : 'false'; ?>" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                     Data Buku
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                    data-bs-parent="#sidenavAccordion">
+                <div class="collapse <?php echo $book_active ? 'show' : ''; ?>" id="collapseLayouts"
+                    aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="layout-static.html">Daftar Buku</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">Tambah Buku</a>
+                        <a class="nav-link <?php echo ($page == 'daftar-buku')? 'active' : '';  ?>"
+                            href="index.php?hal=daftar-buku">Daftar Buku</a>
+                        <a class="nav-link <?php echo ($page == 'tambah-buku')? 'active' : '';  ?>"
+                            href="index.php?hal=tambah-buku">Tambah Buku</a>
                     </nav>
                 </div>
                 <!--batas-->
