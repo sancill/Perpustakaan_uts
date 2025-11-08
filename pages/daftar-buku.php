@@ -57,10 +57,9 @@ if ($result_kategori) {
                                 <?php if (!empty($row['cover_buku']) && file_exists("uploads/buku/" . $row['cover_buku'])): ?>
                                 <img src="uploads/buku/<?php echo htmlspecialchars($row['cover_buku']); ?>"
                                     alt="Cover <?php echo htmlspecialchars($row['judul']); ?>"
-                                    style="width: 50px; height: 70px; object-fit: cover; margin-right: 10px; border-radius: 5px;">
+                                    style="width:50px; height:70px; object-fit:cover; border-radius:5px; margin-right:10px;">
                                 <?php else: ?>
-                                <div
-                                    style="width: 50px; height: 70px; background: #eee; display: flex; align-items: center; justify-content: center; margin-right: 10px; border-radius: 5px; text-align: center;">
+                                <div style="width:50px; height:70px; background:#ddd; display:flex; align-items:center; justify-content:center; border-radius:5px; margin-right:10px; text-align:center;">
                                     <small>No<br>Cover</small>
                                 </div>
                                 <?php endif; ?>
