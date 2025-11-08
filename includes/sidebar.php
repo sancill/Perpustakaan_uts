@@ -13,6 +13,7 @@ if (!isset($_SESSION)) {
                     Dashboard
                 </a>
                 <div class="sb-sidenav-menu-heading">Manajemen</div>
+                <!--Menu Buku-->
                 <?php
                 // Tandai menu Buku aktif jika halaman terkait buku sedang dibuka
                 $book_pages = array('daftar-buku', 'tambah-buku', 'ubah-buku');
@@ -29,12 +30,14 @@ if (!isset($_SESSION)) {
                     aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link <?php echo ($page == 'daftar-buku')? 'active' : '';  ?>"
-                            href="index.php?hal=daftar-buku">Daftar Buku</a>
+                            href="index.php?hal=daftar-buku">- Daftar Buku</a>
                         <a class="nav-link <?php echo ($page == 'tambah-buku')? 'active' : '';  ?>"
-                            href="index.php?hal=tambah-buku">Tambah Buku</a>
+                            href="index.php?hal=tambah-buku">- Tambah Buku</a>
                     </nav>
                 </div>
                 <!--batas-->
+
+                <!--Menu Kategori-->
                 <a class="nav-link <?php echo ($page == "daftar_kategori" || $page == "tambah-kategori" || $page == "edit-kategori")? "active" : "collapsed" ?>"
                     href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false"
                     aria-controls="collapsePages">
@@ -46,26 +49,48 @@ if (!isset($_SESSION)) {
                     id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link <?php echo ($page == "daftar-kategori")? 'active' : '';  ?>"
-                            href="index.php?hal=daftar-kategori">Daftar Kategori</a>
+                            href="index.php?hal=daftar-kategori">- Daftar Kategori</a>
                         <a class="nav-link <?php echo ($page == "tambah-kategori")? 'active' : '';  ?>"
-                            href="index.php?hal=tambah-kategori">Tambah Kategori</a>
+                            href="index.php?hal=tambah-kategori">- Tambah Kategori</a>
                     </nav>
                 </div>
                 <!--batas-->
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#colapsAnggota"
-                    aria-expanded="false" aria-controls="colapsAnggota">
+
+                <!--Menu Anggota-->
+                <?php
+                    // Modul menu Anggota
+                    $anggota_pages = array('daftar-anggota', 'tambah-anggota', 'ubah-password');
+                    $anggota_active = in_array($page, $anggota_pages);
+                    ?>
+                <a class="nav-link <?php echo $anggota_active ? 'active' : 'collapsed'; ?>" href="#"
+                    data-bs-toggle="collapse" data-bs-target="#colapsAnggota"
+                    aria-expanded="<?php echo $anggota_active ? 'true' : 'false'; ?>" aria-controls="colapsAnggota">
                     <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                     Anggota
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="colapsAnggota" aria-labelledby="headingOne"
-                    data-bs-parent="#sidenavAccordion">
+                <div class="collapse <?php echo $anggota_active ? 'show' : ''; ?>" id="colapsAnggota"
+                    aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="layout-static.html">Daftar Anggota</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">Tambah Anggota</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">Peminjaman</a>
+                        <a class="nav-link <?php echo ($page == 'daftar-anggota')? 'active' : '';  ?>"
+                            href="index.php?hal=daftar-anggota">- Daftar Anggota</a>
+                        <a class="nav-link <?php echo ($page == 'tambah-anggota')? 'active' : '';  ?>"
+                            href="index.php?hal=tambah-anggota">- Tambah Anggota</a>
+                        <!-- Ubah Password: submenu nama anggota -->
+                        <div class="nav-link">- Ubah Password⬇️ </div>
+                        <?php
+                                $sqlSidebarAnggota = "SELECT id_anggota, nama_lengkap FROM anggota ORDER BY nama_lengkap ASC";
+                                $resultSidebarAnggota = mysqli_query($koneksi, $sqlSidebarAnggota);
+                                if ($resultSidebarAnggota) {
+                                    while ($rowSidebarAnggota = mysqli_fetch_assoc($resultSidebarAnggota)) {
+                                        $active = ($page == 'ubah-password' && isset($_GET['id']) && $_GET['id'] == $rowSidebarAnggota['id_anggota']) ? 'active' : '';
+                                        echo '<a class="nav-link ' . $active . '" href="index.php?hal=ubah-password&id=' . $rowSidebarAnggota['id_anggota'] . '">' . htmlspecialchars($rowSidebarAnggota['nama_lengkap']) . '</a>';
+                                    }
+                                }
+                                ?>
                     </nav>
                 </div>
+                <!--batas-->
 
                 <div class="sb-sidenav-menu-heading">Transaksi</div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#colapsPeminjaman"
